@@ -1,0 +1,8 @@
+
+*.h.gch
+moc_*
+*.ndb
+*.cpp.orig
+*.h.orig
+*.o
+*.hpp.orig

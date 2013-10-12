@@ -1,0 +1,2 @@
+ g++ test_note.cpp -o test_note.o -lboost_unit_test_framework
+g++ -DDEBUG test_DbNote.cpp  ../core/category.cpp ../core/note.cpp ../core/DbNote.cpp ../core/date.cpp -o test_DbNote.o  -lboost_unit_test_framework -lsqlite3
