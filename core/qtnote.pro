@@ -7,6 +7,11 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
+QMAKE_CXX = clang++
+QMAKE_CC  = clang
+QMAKE_CXXFLAGS += -std=c++11
+QMAKE_LIBS += -lsqlite3
+
 # Input
 HEADERS += category.h \
            categorydialog.h \
