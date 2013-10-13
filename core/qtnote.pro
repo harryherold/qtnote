@@ -27,7 +27,6 @@ HEADERS += category.h \
 FORMS += categorydialog.ui
 SOURCES += category.cpp \
            categorydialog.cpp \
-           cmd.cpp \
            config.cpp \
            configdialog.cpp \
            date.cpp \
