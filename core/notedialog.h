@@ -27,6 +27,7 @@
 #include <QDialog>
 #include <QWidget>
 #include <QString>
+#include <QShortcut>
 #include <QPushButton>
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -75,6 +76,7 @@ private:
   QGridLayout *gridLayout;
   QHBoxLayout* buttonLayout;
   QVBoxLayout *topLayout;
+  QShortcut *shortcut_save;
 };
 
 #endif /* NOTEDIALOG_H */

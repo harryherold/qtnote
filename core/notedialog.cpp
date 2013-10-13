@@ -50,8 +50,13 @@ NoteDialog::NoteDialog(QWidget * parent, QString title, Qt::WindowFlags f)
   syncButton = new QPushButton("sync", this);
   editButton = new QPushButton("edit", this);
 
+  shortcut_save = new QShortcut( QKeySequence(QKeySequence::Save), this);
+
   connect(exitButton, SIGNAL(clicked()), this, SLOT(slot_closeDialog()));
+  
   connect(syncButton, SIGNAL(clicked()), this, SLOT(slot_syncDialog()));
+  connect(shortcut_save, SIGNAL(activated()), this, SLOT(slot_syncDialog()));
+  
   connect(editButton, SIGNAL(clicked()), this, SLOT(slot_editDialog()));
 
   buttonLayout->addWidget(exitButton);
@@ -73,7 +78,7 @@ void NoteDialog::slot_closeDialog(void)
 
 void NoteDialog::slot_syncDialog(void)
 {
-  emit changedDialog(saveMode);
+  emit changedDialog( saveMode );
 }
 
 void NoteDialog::slot_editDialog(void)
