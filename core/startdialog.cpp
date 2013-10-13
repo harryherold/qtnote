@@ -221,6 +221,7 @@ void StartDialog::sig_newNote(void)
       }
       category_dialog = new CategoryDialog( this );
       category_dialog->show();
+      connect( category_dialog, SIGNAL(sig_saveCategory(CategoryDialog *)), this, SLOT(sig_saveCategory(CategoryDialog *)));
   }
   
 }
@@ -331,6 +332,23 @@ void StartDialog::sig_showNote()
    existingNote->show();
 }
 
+void StartDialog::sig_saveCategory( CategoryDialog *cat_dialog )
+{
+  int rowCount = model_category->rowCount();
+  Category cat(cat_dialog->getCategoryText().toUtf8().constData() );
+  db->saveCategory( cat , append_entr );
+  
+  cats.push_back( cat );
+  
+  QStandardItem *key  = new
+                        QStandardItem(QString("%1").arg(cat.getKatKey()));
+  
+  QStandardItem *desc = new 
+                        QStandardItem( QString(cat.getDesc().c_str() ) );
+  
+  model_category->setItem( rowCount , 0 ,  key);
+  model_category->setItem( rowCount , 1 ,  desc);
+}
 
 void StartDialog::sig_saveNote(save_t saveMode)
 {

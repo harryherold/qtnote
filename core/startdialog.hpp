@@ -38,6 +38,7 @@ public slots:
   void sig_deleteNote( void );
   void sig_show_category( void );
   void sig_show_notes( void );
+  void sig_saveCategory( CategoryDialog *cat_dialog );
 private:
 
   void createActions( void );
