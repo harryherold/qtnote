@@ -444,7 +444,7 @@ bool DbNote::existNote(Note & note)
 bool DbNote::existCategory(Category & category)
 {
   sqlite3_stmt *statement;
-  string stmnt = "select count(*) from KatTable where KatDesc = ?";
+  string stmnt = "select count(*) from KatTable where KatDesc like ? or KatKey = ?";
   if (!openDB()) {
     throw SQLError("Can't open the DB-Connection");
     return false;
@@ -456,7 +456,7 @@ bool DbNote::existCategory(Category & category)
   }
   
   req = sqlite3_bind_text(statement, 1, category.getDesc().c_str(), category.getDesc().size(), 0 );
-
+  req = sqlite3_bind_int(statement, 2, category.getKatKey());
   if (req != SQLITE_OK) {
     throw SQLError("Binding Date into select statement failed");
     return false;
