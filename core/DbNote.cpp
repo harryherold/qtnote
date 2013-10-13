@@ -253,6 +253,28 @@ bool DbNote::insertTable(Category & cat)
     return false;
   }
   sqlite3_finalize(statement);
+  
+  stmnt = "select seq from sqlite_sequence where name = \"KatTable\"";
+  req = sqlite3_prepare_v2(db, stmnt.c_str(), stmnt.length(), &statement,
+                               0);
+  if (req == SQLITE_ERROR) 
+  {
+    throw SQLError("Can't select data of the given table");
+    return false;
+  }
+  sqlite3_column_count(statement);
+  req = sqlite3_step(statement);
+  if (req == SQLITE_ROW) 
+  {
+    int nextseq = (int) sqlite3_column_int(statement, 0);
+    cat.setKatKey( nextseq );
+  }
+  else
+  {
+    throw SQLError("execute of select failed");
+    return false;  
+  }
+  sqlite3_finalize(statement);
   sqlite3_close(db);
   return true;
 }
@@ -422,7 +444,7 @@ bool DbNote::existNote(Note & note)
 bool DbNote::existCategory(Category & category)
 {
   sqlite3_stmt *statement;
-  string stmnt = "select count(*) from KatTable where KatKey = ?";
+  string stmnt = "select count(*) from KatTable where KatDesc = ?";
   if (!openDB()) {
     throw SQLError("Can't open the DB-Connection");
     return false;
@@ -432,7 +454,8 @@ bool DbNote::existCategory(Category & category)
     throw SQLError("Preparing Select-Statement failed in existCategory()");
     return false;
   }
-  req = sqlite3_bind_int(statement, 1, category.getKatKey());
+  
+  req = sqlite3_bind_text(statement, 1, category.getDesc().c_str(), category.getDesc().size(), 0 );
 
   if (req != SQLITE_OK) {
     throw SQLError("Binding Date into select statement failed");
@@ -451,7 +474,7 @@ bool DbNote::existCategory(Category & category)
 
 }
 
-bool DbNote::saveCategory(Category cat , save_t sav)
+bool DbNote::saveCategory(Category & cat , save_t sav)
 {
   if(sav == append_entr) {
     if( existCategory(cat)) {

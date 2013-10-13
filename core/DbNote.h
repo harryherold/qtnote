@@ -29,7 +29,7 @@ public:
   void setDb(string fileName);
 
   bool saveEntry(Note & note, save_t sav);
-  bool saveCategory(Category cat, save_t sav);
+  bool saveCategory(Category & cat, save_t sav);
   int getNextNoteKey( void );
   vector<Note> getEntriesByCategory(Category cat);
 
