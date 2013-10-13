@@ -55,7 +55,7 @@ StartDialog::StartDialog( QMainWindow *parent )
   
   createActions();
   createMenus();
-  statusBar()->showMessage( QString("Welcome to note-man !!") );
+  statusBar()->showMessage( QString("Welcome to qtnote !!") );
 }
 
 StartDialog::~StartDialog() {}
@@ -209,6 +209,7 @@ void StartDialog::sig_newNote(void)
       });
       existingNote->saveMode = append_entr;
       existingNote->resize(500,500);
+      existingNote->noteLineE->setFocus( Qt::OtherFocusReason );
       existingNote->show();
   }
   else
@@ -271,7 +272,7 @@ void StartDialog::sig_accept()
 void StartDialog::sig_version()
 {
   QMessageBox msgBox;
-  msgBox.setText("Current version of note-man "+version);
+  msgBox.setText("Current version of qtnote: "+version);
   msgBox.exec();
 }
 
@@ -306,7 +307,7 @@ void StartDialog::sig_showNote()
     existingNote = NULL;
   }
   
-  QModelIndexList indexes = table->selectionModel()->selection().indexes();;
+  QModelIndexList indexes = table->selectionModel()->selection().indexes();
   
   QModelIndex index = indexes.at(0);
   
@@ -317,7 +318,7 @@ void StartDialog::sig_showNote()
   existingNote->table_idx = row;
   existingNote->noteLineE->setText(QString(all[row].getNotetitle().c_str()));
   existingNote->noteTextE->setPlainText(QString(all[row].getNoteText().c_str()));
-    //~ 
+  
   for(unsigned int j = 0; j < cats.size() ; j++) {
     existingNote->categoryComboBox->addItem(QString(cats[j].getDesc().c_str()));
     if( cats[j].getKatKey() == all[row].getKatKey() ) {
@@ -326,6 +327,7 @@ void StartDialog::sig_showNote()
    }
    existingNote->saveMode = write_entr;
    existingNote->resize(500,500);
+   existingNote->noteTextE->setFocus( Qt::OtherFocusReason );
    existingNote->show();
 }
 
@@ -364,13 +366,11 @@ void StartDialog::sig_saveNote(save_t saveMode)
   
   model->setItem(idx, 3, new QStandardItem(catText));
   
-  if( db->saveEntry(all[idx], saveMode) ) {
-    msgBox.setText("The note has been modified.");
-    msgBox.exec();
-  } else {
+  if( ! db->saveEntry(all[idx], saveMode) ) {
     msgBox.setText("Sync failed !!");
     msgBox.exec();
   }
+  
   if( saveMode == append_entr ) {
     existingNote->saveMode = write_entr;
     existingNote->table_idx = idx;
