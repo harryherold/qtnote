@@ -454,7 +454,6 @@ bool DbNote::existCategory(Category & category)
     throw SQLError("Preparing Select-Statement failed in existCategory()");
     return false;
   }
-  
   req = sqlite3_bind_text(statement, 1, category.getDesc().c_str(), category.getDesc().size(), 0 );
   req = sqlite3_bind_int(statement, 2, category.getKatKey());
   if (req != SQLITE_OK) {

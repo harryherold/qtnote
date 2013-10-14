@@ -14,9 +14,9 @@ private:
   int KatKey;
   std::string KatDesc;
 public:
-  Category(std::string katdesc):KatDesc(katdesc) {}
+  Category(std::string katdesc):KatKey( 0 ), KatDesc(katdesc) {}
   Category(int key):KatKey(key) {}
-  Category() {}
+  Category():KatKey( 0 ),KatDesc("") {}
   void setKatKey(int key);
   void setKatDesc(std::string desc);
   int getKatKey();

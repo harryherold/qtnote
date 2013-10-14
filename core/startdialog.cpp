@@ -335,7 +335,8 @@ void StartDialog::sig_showNote()
 void StartDialog::sig_saveCategory( CategoryDialog *cat_dialog )
 {
   int rowCount = model_category->rowCount();
-  Category cat(cat_dialog->getCategoryText().toUtf8().constData() );
+  Category cat( cat_dialog->getCategoryText().toUtf8().constData() );
+  
   db->saveCategory( cat , append_entr );
   
   cats.push_back( cat );
