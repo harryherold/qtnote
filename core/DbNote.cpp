@@ -315,6 +315,18 @@ bool DbNote::deleteNote(int idx)
   return false;
 }
 
+bool DbNote::deleteCategory(int idx)
+{
+  Category tmp_cat( idx );
+  stringstream ss;
+  ss << idx;
+  string stmnt = "delete from KatTable where KatKey="+ss.str();
+  if( existCategory( tmp_cat ) ) {
+    return deleteRow(stmnt);
+  }
+  return false;
+}
+
 bool DbNote::updateRow(Note & note)
 {
   sqlite3_stmt *statement;
