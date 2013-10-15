@@ -30,7 +30,7 @@
 Config::Config()
   :configName("notedb.conf")
 {
-  homePath = QString(std::getenv("HOME")) + QString("/.note/");
+  homePath = QString(std::getenv("HOME")) + QString("/.qtnote/");
   configSections["Paths"] = &Config::parsePaths;
   configSections["Editor"] = &Config::parseEditor;
 }
