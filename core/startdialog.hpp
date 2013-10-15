@@ -25,6 +25,8 @@ public:
 
   StartDialog(QMainWindow *parent = 0);
   QSize getTableSize();
+  QStandardItemModel * getCurrentModel( void );
+  
   ~StartDialog();
 
 public slots:

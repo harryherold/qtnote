@@ -90,7 +90,7 @@ void NoteDialog::slot_editDialog(void)
   QTextStream outStream(&file);
   outStream << noteTextE->toPlainText();
   file.close();
-  process.start("urxvt", QStringList() << "-e" << "vim" << QString( homePath + "/.note_txt_tmp" ) );
+  process.start("xterm", QStringList() << "-e" << "vim" << QString( homePath + "/.note_txt_tmp" ) );
   startedPid = true;
 }
 

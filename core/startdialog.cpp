@@ -179,7 +179,7 @@ void StartDialog::initialCategoryModel()
         QStandardItem * key = new 
         QStandardItem( QString("%1").arg(cats[i].getKatKey()) );
         model_category->setItem( i , 0 , key );
-        
+
         QStandardItem *title = new
         QStandardItem( QString( cats[i].getDesc().c_str() ) );
         model_category->setItem(i,1,title);
@@ -187,6 +187,11 @@ void StartDialog::initialCategoryModel()
     QStringList headerLabels;
     headerLabels << "id" << "category name";
     model_category->setHorizontalHeaderLabels(headerLabels);
+}
+
+QStandardItemModel * StartDialog::getCurrentModel( void )
+{
+    return ( note_view_active ) ? model : model_category;
 }
 
 void StartDialog::sig_newNote(void)
@@ -231,35 +236,33 @@ void StartDialog::sig_deleteNote(void)
   std::vector<int> deletedNotes;
   QMessageBox msgBox;
   
-  QModelIndexList indexes = table->selectionModel()->selection().indexes();;
+  QModelIndexList indexes = table->selectionModel()->selection().indexes();
   
   QModelIndex index = indexes.at(0);
+
+  int row = index.row();
   
-  int row = index.row(); 
-  if ( ! db->deleteNote(all[row].getNoteKey()) ) {
-    msgBox.setText("Can't delete note "+QString().setNum(all[row].getNoteKey()));
-    msgBox.exec();
-  } else {
-    deletedNotes.push_back(row);
-  }
-  //~ support multi choice 
+  QStandardItemModel * current_model = getCurrentModel();
   
-  //~ QModelIndexList selectedList = table->selectionModel()->selectedRows();
-  //~ foreach( QModelIndex mi , selectedList )
-  //~ {
-    //~ int row = mi.row(); 
-    //~ if ( ! db->deleteNote(all[row].getNoteKey()) ) {
-      //~ msgBox.setText("Can't delete note "+QString().setNum(all[row].getNoteKey()));
-      //~ msgBox.exec();
-    //~ } else {
-      //~ deletedNotes.push_back(row);
-    //~ }
-  //~ }
-  for(unsigned int i = 0 ; i < deletedNotes.size() ; i++) {
-    all.erase(all.begin() + deletedNotes[i]);
-    model->removeRows(deletedNotes[i],1);
+  if( note_view_active )
+  {
+      if ( !db->deleteNote( current_model->item( row, 0 )->text().toInt() )) 
+      {
+        msgBox.setText("Can't delete item");
+        msgBox.exec();
+      }
   }
-  table->setModel(model);
+  else
+  {
+      if ( !db->deleteCategory( current_model->item( row, 0 )->text().toInt() )) 
+      {
+        msgBox.setText("Can't delete item");
+        msgBox.exec();
+      } 
+  }
+  current_model->removeRows( row, 1 );
+  
+  table->setModel( current_model );
 }
 
 
