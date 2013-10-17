@@ -40,43 +40,48 @@
 #include <QTextEdit>
 #include <QLineEdit>
 
-#include "util.h"
+#include <util.h>
 
 class NoteDialog: public QDialog
 {
   Q_OBJECT
 
 public:
+
   NoteDialog(QWidget * parent = 0, QString title = "", Qt::WindowFlags f = 0);
   virtual ~NoteDialog();
 
-  int table_idx;
-  QComboBox *categoryComboBox;
-  QTextEdit *noteTextE;
-  QLineEdit *noteLineE;
-  save_t saveMode;
+  int               table_idx;
+  QComboBox*        categoryComboBox;
+  QTextEdit*        noteTextE;
+  QLineEdit*        noteLineE;
+  save_t            saveMode;
 
-  bool eventFilter(QObject *object, QEvent *event);
+  bool              eventFilter(QObject *object, QEvent *event);
+  
 public slots:
-  void slot_closeDialog(void);
-  void slot_syncDialog(void);
-  void slot_editDialog(void);
+
+  void              slot_closeDialog(void);
+  void              slot_syncDialog(void);
+  void              slot_editDialog(void);
 
 signals:
-  void changedDialog(save_t saveMode);
+
+  void              changedDialog(save_t saveMode);
 
 private:
 
-  QPushButton *exitButton;
-  QPushButton *syncButton;
-  QPushButton *editButton;
+  QPushButton*      exitButton;
+  QPushButton*      syncButton;
+  QPushButton*      editButton;
 
-  QProcess process;
-  bool startedPid;
-  QGridLayout *gridLayout;
-  QHBoxLayout* buttonLayout;
-  QVBoxLayout *topLayout;
-  QShortcut *shortcut_save;
+  QProcess          process;
+  bool              startedPid;
+  QGridLayout*      gridLayout;
+  QHBoxLayout*      buttonLayout;
+  QVBoxLayout*      topLayout;
+  QShortcut*        shortcut_save;
+
 };
 
 #endif /* NOTEDIALOG_H */

@@ -37,32 +37,35 @@ class ConfigDialog : public QDialog
   Q_OBJECT
   
   public:
+  
     ConfigDialog( QWidget * parent = 0, Qt::WindowFlags f = 0 );
-    QString getPath( void );
-    QString getName( void );
-    QString getEditor( void );
-    QString getEditorOpt( void );
+    QString         getPath( void );
+    QString         getName( void );
+    QString         getEditor( void );
+    QString         getEditorOpt( void );
    
   public slots:
-    void slot_syncDialog(void);
+  
+    void            slot_syncDialog(void);
    
   signals:
-    void changedDialog( void ); 
+  
+    void            changedDialog( void ); 
     
   private:
   
-    QLineEdit *inputPath;
-    QLineEdit *inputName;
-    QLineEdit *inputEditor;
-    QLineEdit *inputEditorOpt;
-    QLabel *labelPath;
-    QLabel *labelName;
-    QLabel *labelEditor;
-    QLabel *labelEditorOpt;
-    QHBoxLayout* buttonlayout;
-    QGridLayout *mainGrid;
-    QVBoxLayout *topLayout;
-    QPushButton *buttonOk;
+    QLineEdit*      inputPath;
+    QLineEdit*      inputName;
+    QLineEdit*      inputEditor;
+    QLineEdit*      inputEditorOpt;
+    QLabel*         labelPath;
+    QLabel*         labelName;
+    QLabel*         labelEditor;
+    QLabel*         labelEditorOpt;
+    QHBoxLayout*    buttonlayout;
+    QGridLayout*    mainGrid;
+    QVBoxLayout*    topLayout;
+    QPushButton*    buttonOk;
 };
 
 #endif /* CONFIGDIALOG_HPP */ 

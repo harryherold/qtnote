@@ -1,10 +1,10 @@
 #include "categorydialog.h"
 #include "ui_categorydialog.h"
 
-CategoryDialog::CategoryDialog(QWidget *parent) :
+CategoryDialog::CategoryDialog(QWidget *parent, save_t sav_mode) :
     QDialog(parent),
-    ui(new Ui::CategoryDialog)
-
+    ui(new Ui::CategoryDialog),
+    save_mode(sav_mode)
 {   
     ui->setupUi(this);
     ui->lineEdit->setFocus( Qt::OtherFocusReason );
@@ -24,4 +24,9 @@ void CategoryDialog::slot_saveCategory( void )
 QString CategoryDialog::getCategoryText( void )
 {
     return ui->lineEdit->text();
+}
+
+void CategoryDialog::setCategoryDesc( QString cat_desc )
+{
+    ui->lineEdit->setText( cat_desc );
 }

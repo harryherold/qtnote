@@ -22,7 +22,8 @@
  */
 
 
-#include "notedialog.h"
+#include <notedialog.h>
+
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>

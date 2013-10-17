@@ -26,7 +26,7 @@
 #include <QString>
 #include <QMap>
 #include <QTextStream>
-#include "util.h"
+#include <util.h>
 
 
 class Config
@@ -34,36 +34,39 @@ class Config
 
 public:
 
-  explicit Config();
-  config_t checkConfig( void );
-  void loadConfig( void );
-  void insertPath( QString );
-  bool parseFile( void );
-  bool parsePaths( QTextStream & );
-  bool parseEditor( QTextStream & );
-  bool writeConfigToDisk( QMap<QString,QString>&, QMap<QString,QString>&,
-                          QString&);
+  explicit                    Config();
+  
+  config_t                    checkConfig( void );
+  void                        loadConfig( void );
+  void                        insertPath( QString );
+  bool                        parseFile( void );
+  bool                        parsePaths( QTextStream & );
+  bool                        parseEditor( QTextStream & );
+  bool                        writeConfigToDisk( QMap<QString,QString>&,
+                                                 QMap<QString,QString>&,
+                                                 QString& );
 
-  QMap<QString,QString>& getDatabases( void );
-  QMap<QString,QString>& getEditor( void );
-  QString& getCurrentDatabase( void );
+  QMap<QString,QString>&      getDatabases( void );
+  QMap<QString,QString>&      getEditor( void );
+  QString&                    getCurrentDatabase( void );
 
 private:
 
-  QString homePath;
-  QString configName;
-
   typedef bool ( Config::*MemFuncGetter )( QTextStream & );
-  QMap<QString,QString> databases;
-  QMap<QString,QString> editor;
+
+  QMap<QString,QString>       databases;
+  QMap<QString,QString>       editor;
+
+  QString                     homePath;
+  QString                     configName;
 
   QMap<QString,MemFuncGetter> configSections;
 
-  QString editorOptions;
-  QString currentDatabase;
+  QString                     editorOptions;
+  QString                     currentDatabase;
 
-  int linecount;
-  QString errorMesg;
+  int                         linecount;
+  QString                     errorMesg;
 };
 
 #endif /* CONFIG_H */

@@ -26,11 +26,11 @@
 #define STARTUP_HPP
 #include <QObject>
 
-#include "config.hpp"
-#include "util.h"
-#include "DbNote.h"
-#include "startdialog.hpp"
-#include "configdialog.hpp"
+#include <config.hpp>
+#include <util.h>
+#include <DbNote.h>
+#include <startdialog.hpp>
+#include <configdialog.hpp>
 
 
 class Startup : public QObject
@@ -38,18 +38,22 @@ class Startup : public QObject
   Q_OBJECT
   
   public:
+  
     Startup(QObject * parent = 0);
   
   public slots:
-    void createDatabase();  
+  
+    void            createDatabase();  
+  
   private:
-    Config config;
-    DbNote *db;
-    ConfigDialog * cdlg;
+  
+    Config          config;
+    DbNote*         db;
+    ConfigDialog*   cdlg;
     
-    void reportErrorMesg( QString );
-    void start( void );
-    void createConfig( void );
+    void            reportErrorMesg( QString );
+    void            start( void );
+    void            createConfig( void );
 };
 
 #endif /* STARTUP_HPP */ 

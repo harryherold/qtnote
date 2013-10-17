@@ -22,27 +22,26 @@
  */
 
 
-#include "configdialog.hpp"
+#include <configdialog.hpp>
 
 
 ConfigDialog::ConfigDialog( QWidget * parent, Qt::WindowFlags f)
 :QDialog(parent,f)
 {
-  inputPath = new QLineEdit(this);
-  inputName = new QLineEdit(this);
-  inputEditor = new QLineEdit(this);
+  inputPath      = new QLineEdit(this);
+  inputName      = new QLineEdit(this);
+  inputEditor    = new QLineEdit(this);
   inputEditorOpt = new QLineEdit(this);
-  labelPath = new QLabel("Path to save:",this);
-  labelName = new QLabel("Name:",this);
-  labelEditor = new QLabel("Editor:",this);
+  labelPath      = new QLabel("Path to save:",this);
+  labelName      = new QLabel("Name:",this);
+  labelEditor    = new QLabel("Editor:",this);
   labelEditorOpt = new QLabel("Editor-Options::",this);
-  buttonOk = new QPushButton("OK",this);
+  buttonOk       = new QPushButton("OK",this);
+  buttonlayout   = new QHBoxLayout;
+  mainGrid       = new QGridLayout;
+  topLayout      = new QVBoxLayout;
   
   connect(buttonOk, SIGNAL(clicked()), this, SLOT(slot_syncDialog()));
-  
-  buttonlayout = new QHBoxLayout;
-  mainGrid = new QGridLayout;
-  topLayout = new QVBoxLayout;
   
   mainGrid->addWidget(labelPath       ,0 ,0 );
   mainGrid->addWidget(labelName       ,1 ,0 );

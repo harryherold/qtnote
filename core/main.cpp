@@ -9,9 +9,10 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QtGui/QApplication>
-#include "startdialog.hpp"
-#include "startup.hpp"
-#include "notedialog.h"
+
+#include <startdialog.hpp>
+#include <startup.hpp>
+#include <notedialog.h>
 
 int main(int argc, char *argv[])
 {

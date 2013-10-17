@@ -1,4 +1,4 @@
-#include  "note.h"
+#include  <note.h>
 
 Note::Note( Date d )
   :noteKey(0),date(d),KatKey(0),noteRef(0)

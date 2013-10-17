@@ -1,10 +1,13 @@
-#include "DbNote.h"
+#include <DbNote.h>
+
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <string.h>
 #include <sqlite3.h>
+
 DbNote* DbNote::singleton = 0;
+
 struct SQLError: public runtime_error {
   SQLError(const string &msg) :
     runtime_error(string("SQL-ERROR : ") + msg) {

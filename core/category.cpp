@@ -1,4 +1,5 @@
-#include "category.h"
+#include <category.h>
+
 void Category::setKatKey(int key)
 {
   KatKey = key;

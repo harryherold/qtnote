@@ -20,7 +20,7 @@
  *
  *
  */
-#include "config.hpp"
+#include <config.hpp>
 #include <QDir>
 #include <QDebug>
 #include <iostream>
