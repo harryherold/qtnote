@@ -1,10 +1,25 @@
 /*
- * File:   note.h
- * Author: harry
+ * note.h
  *
- * Created on 6. April 2012, 10:44
+ * Copyright 2013 Christian Herold <harryherold@googlemail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
  */
-
 #ifndef NOTE_H
 #define	NOTE_H
 #include <string>
@@ -13,30 +28,30 @@
 class Note
 {
 private:
-  int                       noteKey;
-  Date                      date;
-  std::string               noteText;
-  std::string               noteTitle;
-  int                       KatKey;
-  int                       noteRef;
+    int                       noteKey;
+    Date                      date;
+    std::string               noteText;
+    std::string               noteTitle;
+    int                       KatKey;
+    int                       noteRef;
 
 public:
-  Note();
-  Note( Date d );
-  void                      setNoteKey(int key);
-  void                      setKatKey(int katkey);
-  void                      setDate (Date d);
-  void                      setNoteText(std::string text);
-  void                      setNoteTitle(std::string title);
-  void                      setNoteRef(int ref);
-  
-  int                       getNoteRef();
-  Date&                     getDate();
-  int                       getKatKey();
-  int                       getNoteKey();
-  std::string               getNotetitle();
-  std::string               getNoteText();
-  std::vector<std::string>  formatText();
+    Note();
+    Note( Date d );
+    void                      setNoteKey(int key);
+    void                      setKatKey(int katkey);
+    void                      setDate (Date d);
+    void                      setNoteText(std::string text);
+    void                      setNoteTitle(std::string title);
+    void                      setNoteRef(int ref);
+
+    int                       getNoteRef();
+    Date&                     getDate();
+    int                       getKatKey();
+    int                       getNoteKey();
+    std::string               getNotetitle();
+    std::string               getNoteText();
+    std::vector<std::string>  formatText();
 };
 
 

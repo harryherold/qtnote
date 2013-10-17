@@ -29,92 +29,93 @@
 #include <QTextStream>
 
 NoteDialog::NoteDialog(QWidget * parent, QString title, Qt::WindowFlags f)
-  :QDialog(parent,f)
+    :QDialog(parent,f)
 {
-  gridLayout = new QGridLayout;
-  buttonLayout = new QHBoxLayout;
-  topLayout = new QVBoxLayout;
+    gridLayout = new QGridLayout;
+    buttonLayout = new QHBoxLayout;
+    topLayout = new QVBoxLayout;
 
-  categoryComboBox = new QComboBox(this);
-  noteTextE = new QTextEdit;
-  noteLineE = new QLineEdit;
-  
-  startedPid = false;
-  
-  topLayout->addWidget(noteLineE);
-  topLayout->addWidget(categoryComboBox);
-  topLayout->addWidget(noteTextE);
+    categoryComboBox = new QComboBox(this);
+    noteTextE = new QTextEdit;
+    noteLineE = new QLineEdit;
 
-  gridLayout->addLayout(topLayout,0,0);
+    startedPid = false;
 
-  exitButton = new QPushButton("close", this);
-  syncButton = new QPushButton("sync", this);
-  editButton = new QPushButton("edit", this);
+    topLayout->addWidget(noteLineE);
+    topLayout->addWidget(categoryComboBox);
+    topLayout->addWidget(noteTextE);
 
-  shortcut_save = new QShortcut( QKeySequence(QKeySequence::Save), this);
+    gridLayout->addLayout(topLayout,0,0);
 
-  connect(exitButton, SIGNAL(clicked()), this, SLOT(slot_closeDialog()));
-  
-  connect(syncButton, SIGNAL(clicked()), this, SLOT(slot_syncDialog()));
-  connect(shortcut_save, SIGNAL(activated()), this, SLOT(slot_syncDialog()));
-  
-  connect(editButton, SIGNAL(clicked()), this, SLOT(slot_editDialog()));
+    exitButton = new QPushButton("close", this);
+    syncButton = new QPushButton("sync", this);
+    editButton = new QPushButton("edit", this);
 
-  buttonLayout->addWidget(exitButton);
-  buttonLayout->addWidget(syncButton);
-  buttonLayout->addWidget(editButton);
+    shortcut_save = new QShortcut( QKeySequence(QKeySequence::Save), this);
 
-  gridLayout->addLayout(buttonLayout, 1, 0);
-  
-  installEventFilter(this);
-  
-  setLayout(gridLayout);
+    connect(exitButton, SIGNAL(clicked()), this, SLOT(slot_closeDialog()));
+
+    connect(syncButton, SIGNAL(clicked()), this, SLOT(slot_syncDialog()));
+    connect(shortcut_save, SIGNAL(activated()), this, SLOT(slot_syncDialog()));
+
+    connect(editButton, SIGNAL(clicked()), this, SLOT(slot_editDialog()));
+
+    buttonLayout->addWidget(exitButton);
+    buttonLayout->addWidget(syncButton);
+    buttonLayout->addWidget(editButton);
+
+    gridLayout->addLayout(buttonLayout, 1, 0);
+
+    installEventFilter(this);
+
+    setLayout(gridLayout);
 
 }
 
 void NoteDialog::slot_closeDialog(void)
 {
-  setVisible(false);
+    setVisible(false);
 }
 
 void NoteDialog::slot_syncDialog(void)
 {
-  emit changedDialog( saveMode );
+    emit changedDialog( saveMode );
 }
 
 void NoteDialog::slot_editDialog(void)
 {
-  QString homePath = QString(std::getenv("HOME"));
-  QFile file( homePath + "/.note_txt_tmp" );
-  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    return;
-  QTextStream outStream(&file);
-  outStream << noteTextE->toPlainText();
-  file.close();
-  process.start("xterm", QStringList() << "-e" << "vim" << QString( homePath + "/.note_txt_tmp" ) );
-  startedPid = true;
+    QString homePath = QString(std::getenv("HOME"));
+    QFile file( homePath + "/.note_txt_tmp" );
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+    QTextStream outStream(&file);
+    outStream << noteTextE->toPlainText();
+    file.close();
+    process.start("xterm", QStringList() << "-e" << "vim" << QString( homePath + "/.note_txt_tmp" ) );
+    startedPid = true;
 }
 
 bool NoteDialog::eventFilter(QObject *object, QEvent *event)
 {
     if (event->type() == QEvent::ActivationChange)
     {
-       if( ! startedPid ) {
-        return true;
-      }
-      if( QProcess::Running == process.state() ) 
-        return true;
-       
-       QString homePath = QString(std::getenv("HOME"));
-       QFile file( homePath + "/.note_txt_tmp" );
-       
-       if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return false;
-       
-       QTextStream inStream(&file);
-       QString txt = inStream.readAll();
-       file.remove();
-       noteTextE->setText(txt);
+        if( ! startedPid )
+        {
+            return true;
+        }
+        if( QProcess::Running == process.state() )
+            return true;
+
+        QString homePath = QString(std::getenv("HOME"));
+        QFile file( homePath + "/.note_txt_tmp" );
+
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return false;
+
+        QTextStream inStream(&file);
+        QString txt = inStream.readAll();
+        file.remove();
+        noteTextE->setText(txt);
     }
     return false;
 }

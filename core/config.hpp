@@ -34,39 +34,39 @@ class Config
 
 public:
 
-  explicit                    Config();
-  
-  config_t                    checkConfig( void );
-  void                        loadConfig( void );
-  void                        insertPath( QString );
-  bool                        parseFile( void );
-  bool                        parsePaths( QTextStream & );
-  bool                        parseEditor( QTextStream & );
-  bool                        writeConfigToDisk( QMap<QString,QString>&,
-                                                 QMap<QString,QString>&,
-                                                 QString& );
+    explicit                    Config();
 
-  QMap<QString,QString>&      getDatabases( void );
-  QMap<QString,QString>&      getEditor( void );
-  QString&                    getCurrentDatabase( void );
+    config_t                    checkConfig( void );
+    void                        loadConfig( void );
+    void                        insertPath( QString );
+    bool                        parseFile( void );
+    bool                        parsePaths( QTextStream & );
+    bool                        parseEditor( QTextStream & );
+    bool                        writeConfigToDisk( QMap<QString,QString>&,
+                                                   QMap<QString,QString>&,
+                                                   QString& );
+
+    QMap<QString,QString>&      getDatabases( void );
+    QMap<QString,QString>&      getEditor( void );
+    QString&                    getCurrentDatabase( void );
 
 private:
 
-  typedef bool ( Config::*MemFuncGetter )( QTextStream & );
+    typedef bool ( Config::*MemFuncGetter )( QTextStream & );
 
-  QMap<QString,QString>       databases;
-  QMap<QString,QString>       editor;
+    QMap<QString,QString>       databases;
+    QMap<QString,QString>       editor;
 
-  QString                     homePath;
-  QString                     configName;
+    QString                     homePath;
+    QString                     configName;
 
-  QMap<QString,MemFuncGetter> configSections;
+    QMap<QString,MemFuncGetter> configSections;
 
-  QString                     editorOptions;
-  QString                     currentDatabase;
+    QString                     editorOptions;
+    QString                     currentDatabase;
 
-  int                         linecount;
-  QString                     errorMesg;
+    int                         linecount;
+    QString                     errorMesg;
 };
 
 #endif /* CONFIG_H */
